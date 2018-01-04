@@ -172,6 +172,7 @@ private Q_SLOTS:
 
 public Q_SLOTS:
     void viewFullScreen(bool fullScreen);
+    void showBookmarksPane(bool show);
 
 private:
     void correctStandardShortcuts();
@@ -202,6 +203,7 @@ private:
 private:
     ViewManager *_viewManager;
     BookmarkHandler *_bookmarkHandler;
+    KToggleAction *_toggleBookmarksPaneAction;
     KToggleAction *_toggleMenuBarAction;
     KActionMenu *_newTabMenuAction;
 

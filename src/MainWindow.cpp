@@ -349,6 +349,15 @@ void MainWindow::setupActions()
     _toggleMenuBarAction = KStandardAction::showMenubar(menuBar(), SLOT(setVisible(bool)), collection);
     collection->setDefaultShortcut(_toggleMenuBarAction, Konsole::ACCEL + Qt::SHIFT + Qt::Key_M);
 
+    // Show Bookmarks Pane
+    _toggleBookmarksPaneAction = new KToggleAction(i18nc("@action:inmenu", "Show Bookmarks &Pane"), this);
+    // TODO: find a better icon
+    _toggleBookmarksPaneAction->setIcon(QIcon::fromTheme(QStringLiteral("configure")));
+    // TODO: do we want a shortcut?
+    //collection->setDefaultShortcut(_toggleBookmarksPaneAction, Konsole::ACCEL + Qt::SHIFT + Qt::Key_A);
+    menuAction = collection->addAction(QStringLiteral("show-bookmarks-pane"), _toggleBookmarksPaneAction);
+    connect(menuAction, &QAction::toggled, this, &Konsole::MainWindow::showBookmarksPane);
+
     // Full Screen
     menuAction = KStandardAction::fullScreen(this, SLOT(viewFullScreen(bool)), this, collection);
     collection->setDefaultShortcut(menuAction, Qt::Key_F11);
@@ -367,6 +376,11 @@ void MainWindow::setupActions()
     menuAction->setText(i18nc("@item", "Activate Menu"));
     collection->setDefaultShortcut(menuAction, Konsole::ACCEL + Qt::SHIFT + Qt::Key_F10);
     connect(menuAction, &QAction::triggered, this, &Konsole::MainWindow::activateMenuBar);
+}
+
+void MainWindow::showBookmarksPane(bool show)
+{
+    _toggleBookmarksPaneAction->setChecked(show);
 }
 
 void MainWindow::viewFullScreen(bool fullScreen)
